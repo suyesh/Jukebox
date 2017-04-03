@@ -1,21 +1,61 @@
+function JukeBox(songs) {
+    this.songs = songs,
 
-function JukeBox(){
+    this.playCounter = songs.length - 1,
+
+    this.song = this.songs[this.playCounter],
+
+    this.playMusic = function() {
+        this.audio = new Audio($(this.song).attr('src')),
+        $(this.song).parent().addClass('playing').removeClass('music');
+        this.audio.play();
+
+        $(this.song).bind('ended', function() {
+            $(this.song).parent().addClass('music').removeClass('playing');
+            this.playCounter -= 1;
+            if (this.playCounter < 0) {
+                return;
+            } else {
+                this.playMusic();
+            }
+        });
+    },
+
+    this.pauseMusic = function() {
+        this.audio.pause();
+    };
+
+    this.nextMusic = function(){
+     $(this.song).parent().addClass('music').removeClass('playing');
+      this.audio.pause();
+      this.audio.currentTime = 0;
+      this.song = _.sample(this.songs);
+      this.playMusic();
+    };
+
+    this.stopMusic = function(){
+      $(this.song).parent().addClass('music').removeClass('playing');
+      this.audio.pause();
+      this.audio.currentTime = 0;
+    }
 }
 
-JukeBox.play = function(){
-  var playButtons = document.getElementsByClassName('play');
-   for (var i = 0; i < playButtons.length;i++){
-     playButtons[i].onclick = function playMusic(){
-       $(this).siblings('audio')[0].play();
-     }
-   }
+var allsongs = document.getElementsByTagName('audio');
 
-   var pauseButtons = document.getElementsByClassName('pause');
-    for (var i = 0; i < pauseButtons.length;i++){
-      pauseButtons[i].onclick = function pauseMusic(){
-        $(this).siblings('audio')[0].pause();
-      }
-    }
-};
+var musicPlayer = new JukeBox(allsongs);
 
-JukeBox.play();
+$('.play').click(function() {
+    musicPlayer.playMusic();
+})
+
+$('.forward').click(function(){
+  musicPlayer.nextMusic();
+})
+
+$('.pause').click(function(){
+  musicPlayer.pauseMusic();
+})
+
+$('.stop').click(function(){
+  musicPlayer.stopMusic();
+})
