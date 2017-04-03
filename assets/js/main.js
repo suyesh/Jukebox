@@ -1,12 +1,13 @@
 function JukeBox(songs) {
+    this.audio;
     this.songs = songs,
-    
+
     this.playCounter = songs.length - 1,
 
     this.song = this.songs[this.playCounter],
 
     this.playMusic = function() {
-        this.audio = new Audio($(this.song).attr('src')),
+        this.audio = new Audio($(this.song).attr('src'));
         $(this.song).parent().addClass('playing').removeClass('music');
         this.audio.play();
         $(this.song).bind('ended', function() {
