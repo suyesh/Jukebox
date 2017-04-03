@@ -10,6 +10,9 @@ function JukeBox(songs) {
         this.audio = new Audio($(this.song).attr('src'));
         $(this.song).parent().addClass('playing').removeClass('music');
         this.audio.play();
+        $(this.audio).on("timeupdate", function(){
+          $('#seeker').attr("value", this.currentTime/this.duration);
+        })
         $(this.song).bind('ended', function() {
             $(this.song).parent().addClass('music').removeClass('playing');
             this.playCounter -= 1;
