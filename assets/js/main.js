@@ -40,7 +40,7 @@ function JukeBox(songs) {
     }
 }
 
-var allsongs = document.getElementsByTagName('audio');
+var allsongs = document.getElementsByClassName('audio');
 
 var musicPlayer = new JukeBox(allsongs);
 
