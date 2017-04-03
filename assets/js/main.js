@@ -1,6 +1,6 @@
 function JukeBox(songs) {
     this.songs = songs,
-
+    
     this.playCounter = songs.length - 1,
 
     this.song = this.songs[this.playCounter],
@@ -9,7 +9,6 @@ function JukeBox(songs) {
         this.audio = new Audio($(this.song).attr('src')),
         $(this.song).parent().addClass('playing').removeClass('music');
         this.audio.play();
-
         $(this.song).bind('ended', function() {
             $(this.song).parent().addClass('music').removeClass('playing');
             this.playCounter -= 1;
@@ -25,18 +24,18 @@ function JukeBox(songs) {
         this.audio.pause();
     };
 
-    this.nextMusic = function(){
-     $(this.song).parent().addClass('music').removeClass('playing');
-      this.audio.pause();
-      this.audio.currentTime = 0;
-      this.song = _.sample(this.songs);
-      this.playMusic();
+    this.nextMusic = function() {
+        $(this.song).parent().addClass('music').removeClass('playing');
+        this.audio.pause();
+        this.audio.currentTime = 0;
+        this.song = _.sample(this.songs);
+        this.playMusic();
     };
 
-    this.stopMusic = function(){
-      $(this.song).parent().addClass('music').removeClass('playing');
-      this.audio.pause();
-      this.audio.currentTime = 0;
+    this.stopMusic = function() {
+        $(this.song).parent().addClass('music').removeClass('playing');
+        this.audio.pause();
+        this.audio.currentTime = 0;
     }
 }
 
@@ -48,14 +47,14 @@ $('.play').click(function() {
     musicPlayer.playMusic();
 })
 
-$('.forward').click(function(){
-  musicPlayer.nextMusic();
+$('.forward').click(function() {
+    musicPlayer.nextMusic();
 })
 
-$('.pause').click(function(){
-  musicPlayer.pauseMusic();
+$('.pause').click(function() {
+    musicPlayer.pauseMusic();
 })
 
-$('.stop').click(function(){
-  musicPlayer.stopMusic();
+$('.stop').click(function() {
+    musicPlayer.stopMusic();
 })
